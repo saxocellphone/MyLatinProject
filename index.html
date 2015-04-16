@@ -46,9 +46,10 @@
 				// 	scene.add(skinMesh);
 				// 	idle.play();
 				// });
+				var roman;
 				loader.load('Roman.json', functoin(geometry, material){
-					var roman = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-					scene.add roman;
+					roman = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+					scene.add(roman);
 				});
 				renderer=new THREE.WebGLRenderer();
 				renderer.setSize(window.innerWidth, window.innerHeight);
@@ -66,6 +67,7 @@
 
 			function render(){
 				renderer.render(scene, camera);
+				var
 			}
 
 			function addLights(){
