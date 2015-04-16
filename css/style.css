@@ -1,0 +1,16 @@
+.functionInput{
+	width: 67px;
+}
+
+.boundInput{
+	width: 55px;
+}
+
+.rotationInput{
+	width: 105px;
+}
+
+body{
+	font-family: 'Ubuntu', 'Verdana', 'Arial', 'Roboto', 'Open Sans', sans-serif;
+	font-size: 14px;
+}
