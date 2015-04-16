@@ -16,7 +16,7 @@
 		<script src="js/Detector.js"></script>
 		<script>
 			"use strict";
-			var camera, scene, renderer, loader;
+			var camera, scene, renderer, loader, clock;
 
 			init();
 
@@ -32,20 +32,24 @@
 				camera.position.y=75;
 				camera.position.z=5;
 
+				clock = new THREE.clock();
 				loader = new THREE.JSONLoader();
-				loader.load('HAHA.json', function(geometry, materials){
-					materials.forEach(function(mat){
-						mat.skinning = true;
-					});
-					var skinMesh = new THREE.SkinnedMesh(geometry, new THREE.MeshFaceMaterial(materials));
-					var idle = new THREE.Animation(skinMesh, geometry.animations[0], THREE.AnimationHandler.CATMULLROM);
-					var rest = new THREE.Animation(skinMesh, geometry.animations[1], THREE.AnimationHandler.CATMULLROM);
-					var run = new THREE.Animation(skinMesh, geometry.animations[2], THREE.AnimationHandler.CATMULLROM);
-
-					scene.add(skinMesh);
-					idle.play();
+				// loader.load('HAHA.json', function(geometry, materials){
+				// 	materials.forEach(function(mat){
+				// 		mat.skinning = true;
+				// 	});
+				// 	var skinMesh = new THREE.SkinnedMesh(geometry, new THREE.MeshFaceMaterial(materials));
+				// 	var idle = new THREE.Animation(skinMesh, geometry.animations[0], THREE.AnimationHandler.CATMULLROM);
+				// 	var rest = new THREE.Animation(skinMesh, geometry.animations[1], THREE.AnimationHandler.CATMULLROM);
+				// 	var run = new THREE.Animation(skinMesh, geometry.animations[2], THREE.AnimationHandler.CATMULLROM);
+				//
+				// 	scene.add(skinMesh);
+				// 	idle.play();
+				// });
+				loader.load('Roman.json', functoin(geometry, material){
+					var roman = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+					scene.add roman;
 				});
-
 				renderer=new THREE.WebGLRenderer();
 				renderer.setSize(window.innerWidth, window.innerHeight);
 				document.body.appendChild(renderer.domElement);
