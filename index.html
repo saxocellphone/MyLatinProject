@@ -16,7 +16,7 @@
 		<script src="js/Detector.js"></script>
 		<script>
 			"use strict";
-			var camera, scene, renderer, loader, clock;
+			var camera, scene, renderer, loader, clock, roman;
 
 			init();
 
@@ -46,9 +46,11 @@
 				// 	scene.add(skinMesh);
 				// 	idle.play();
 				// });
-				var roman;
-				loader.load('Roman.json', functoin(geometry, material){
-					roman = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+				loader.load('Roman.json', function(geometry, materials){
+					roman = new THREE.Mesh(
+						geometry,
+						new THREE.MeshFaceMaterial(materials)
+					);
 					scene.add(roman);
 				});
 				renderer=new THREE.WebGLRenderer();
@@ -59,15 +61,12 @@
 				animate();
 				render();
 			}
-
-
 			function animate(){
 				requestAnimationFrame(animate);
 			}
 
 			function render(){
 				renderer.render(scene, camera);
-				var
 			}
 
 			function addLights(){
