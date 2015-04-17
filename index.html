@@ -23,7 +23,7 @@
 					Detector.addGetWebGLMessage();
 					return;
 				}
-				console.log("1");
+				console.log("2");
 				scene=new THREE.Scene();
 
 				camera=new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 1000);
@@ -50,7 +50,7 @@
 					);
 					scene.add(roman);
 				});
-				renderer=new THREE.WebGLRenderer();
+				renderer=new THREE.WebGLRenderer({alpha:true});
 				renderer.setSize(window.innerWidth, window.innerHeight);
 				document.body.appendChild(renderer.domElement);
 
@@ -64,6 +64,7 @@
 
 			function render(){
 				renderer.render(scene, camera);
+				renderer.setClearColorHex(0xffffff,1);
 			}
 
 			function addLights(){
