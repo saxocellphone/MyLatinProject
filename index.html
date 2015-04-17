@@ -23,7 +23,7 @@
 					Detector.addGetWebGLMessage();
 					return;
 				}
-				console.log("3");
+				console.log("2");
 				scene=new THREE.Scene();
 
 				camera=new THREE.PerspectiveCamera(40, window.innerWidth/window.innerHeight, 1, 1000);
@@ -43,7 +43,7 @@
 				// 	idle.play();
 				// });
 				roman = new THREE.Object3D();
-				loader.load('untitled.json', function(geometry, materials){
+				loader.load('cube.json', function(geometry, materials){
 					roman = new THREE.Mesh(
 						geometry,
 						new THREE.MeshFaceMaterial(materials)
