@@ -15,7 +15,7 @@
 		<script>
 			"use strict";
 			var camera, scene, renderer, loader, clock, roman;
-			roman = new THREE.Object3D();
+
 			init();
 
 			function init(){
@@ -43,6 +43,7 @@
 				// 	scene.add(skinMesh);
 				// 	idle.play();
 				// });
+				roman = new THREE.Object3D();
 				loader.load('untitled.json', function(geometry, materials){
 					roman = new THREE.Mesh(
 						geometry,
