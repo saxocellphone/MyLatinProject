@@ -51,7 +51,7 @@
 
 				});
 				scene.add(roman);
-				renderer=new THREE.WebGLRenderer({antialias: true});
+				renderer=new THREE.WebGLRenderer({antialias: true, alpha: true });
 				renderer.setSize(window.innerWidth, window.innerHeight);
 				document.body.appendChild(renderer.domElement);
 
