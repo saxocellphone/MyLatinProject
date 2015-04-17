@@ -50,7 +50,7 @@
 					);
 					scene.add(roman);
 				});
-				console.log(scene.children);
+
 				renderer=new THREE.WebGLRenderer();
 				renderer.setSize(window.innerWidth, window.innerHeight);
 				document.body.appendChild(renderer.domElement);
@@ -58,6 +58,7 @@
 				addLights();
 				animate();
 				render();
+				console.log(scene.children);
 			}
 			function animate(){
 				requestAnimationFrame(animate);
