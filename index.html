@@ -23,7 +23,7 @@
 					Detector.addGetWebGLMessage();
 					return;
 				}
-
+				console.log("1");
 				scene=new THREE.Scene();
 
 				camera=new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 1000);
@@ -69,7 +69,7 @@
 			function addLights(){
 				var ambientLight=new THREE.AmbientLight(0xFFFF00);
 				scene.add(ambientLight);
-				directionalLight = new THREE.DirectionalLight(0xffffff);
+				var directionalLight = new THREE.DirectionalLight(0xffffff);
 				directionalLight.position.set(0,1,0);
 				scene.add(directionalLight);
 			}
