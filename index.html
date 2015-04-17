@@ -15,7 +15,7 @@
 		<script>
 			"use strict";
 			var camera, scene, renderer, loader, clock, roman;
-
+			var mesh;
 			init();
 
 			function init(){
@@ -44,11 +44,12 @@
 				// });
 				roman = new THREE.Object3D();
 				loader.load('cube.json', function(geometry, materials){
-					roman = new THREE.Mesh(
-						geometry,
-						new THREE.MeshFaceMaterial(materials)
-					);
+					materils[0].shading = THREE.FlatShading;
 
+					mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+					mesh.position.x = 400;
+					mesh.scale.x = mesh.scale.y = mesh.scale.z = 250;
+					scene.add(mesh);
 				});
 				scene.add(roman);
 				renderer=new THREE.WebGLRenderer({antialias: true, alpha: true });
