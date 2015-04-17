@@ -44,7 +44,6 @@
 				// });
 				roman = new THREE.Object3D();
 				loader.load('cube.json', function(geometry, materials){
-					materials[0].shading = THREE.FlatShading;
 
 					mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
 					mesh.position.x = 400;
