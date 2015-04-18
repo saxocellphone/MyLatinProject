@@ -20,7 +20,7 @@
 			loader = new THREE.ColladaLoader();
 			loader.options.convertUpAxis = true;
 
-			loader.load('HAHA.dae', function(collada){
+			loader.load('model.dae', function(collada){
 				dae = collada.scene;
 				init();
 				dae.traverse(function(child){
