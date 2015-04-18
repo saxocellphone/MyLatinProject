@@ -52,30 +52,7 @@
 				camera=new THREE.PerspectiveCamera(40, window.innerWidth/window.innerHeight, 1, 1000);
 				camera.position.set(0,1,5);
 
-
-				loader = new THREE.JSONLoader();
-				// loader.load('un.json', function(geometry, materials){
-				// 	materials.forEach(function(mat){
-				// 		mat.skinning = true;
-				// 	});
-				// 	var skinMesh = new THREE.SkinnedMesh(geometry, new THREE.MeshFaceMaterial(materials));
-				// 	var idle = new THREE.Animation(skinMesh, geometry.animations[0], THREE.AnimationHandler.CATMULLROM);
-				// 	var rest = new THREE.Animation(skinMesh, geometry.animations[1], THREE.AnimationHandler.CATMULLROM);
-				// 	var run = new THREE.Animation(skinMesh, geometry.animations[2], THREE.AnimationHandler.CATMULLROM);
-				//
-				// 	scene.add(skinMesh);
-				// 	idle.play();
-				// });
-				roman = new THREE.Object3D();
-				loader.load('cube.json', function(geometry, materials){
-
-					mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-					mesh.position.x = 400;
-					mesh.scale.x = mesh.scale.y = mesh.scale.z = 250;
-					scene.add(mesh);
-				});
-				scene.add(roman);
-				renderer=new THREE.WebGLRenderer({antialias: true, alpha: true });
+				renderer=new THREE.WebGLRenderer({antialias: true});
 				renderer.setSize(window.innerWidth, window.innerHeight);
 				document.body.appendChild(renderer.domElement);
 
