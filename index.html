@@ -40,6 +40,9 @@
 					//backend = new Backend(Frontend, selectionBar.value,gameCode);
 					if(selectionBar.value="singleplayer"){
 						multiplayer = false;
+						document.body.removeChild(selectionBar);
+						document.body.removeChild(startButton);
+						document.body.removeChild(connectButton);
 						init();
 					} else {
 						multiplayer = true;
