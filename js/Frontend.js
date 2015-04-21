@@ -1,5 +1,5 @@
 Frontend = {
-	new: function (x,y,color,eaglep){
+	new-game: function (x,y,color,eaglep){
 		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 		var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
 		var cube = new THREE.Mesh( geometry, material );
@@ -7,6 +7,10 @@ Frontend = {
 
 		soldier.load();
 	},
+	begin-turn: function(){
+
+	}
+	,
 	start: function (){
 
 	},
@@ -25,13 +29,12 @@ Frontend = {
 
 	move: function(begX, begY, endX, endY, color, eaglep){
 		color = (color == "r" ? "red" : "white");
-		eaglep = (eaglep == "s" ? "soldier" : "eagle");
-		console.log(eaglep);
 		for(var i = 0; i < pieceArray.length; i++){
 			if(pieceArray[i].name == begX+""+begY){
-				scene.remove(pieceArray[i]);
-				pieceArray.slice(i,i);
-				Frontend.new(endX,endY,color,eaglep);
+				// scene.remove(pieceArray[i]);
+				// pieceArray.splice(i,i);
+				// Frontend.new(endX,endY,color,"soldier");
+				backend.tryMove(begX, begY, endX, endY);
 				break;
 			}
 		}
