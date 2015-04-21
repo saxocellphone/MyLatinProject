@@ -23,12 +23,15 @@ Frontend = {
 		alert("Code: " + code);
 	},
 
-	move: function(begX, begY, endX, endY){
+	move: function(begX, begY, endX, endY, color, eaglep){
+		color = (color == "r" ? "red" : "white");
+		eaglep = (eaglep == "s" ? "soldier" : "eagle");
+		console.log(eaglep);
 		for(var i = 0; i < pieceArray.length; i++){
 			if(pieceArray[i].name == begX+""+begY){
 				scene.remove(pieceArray[i]);
 				pieceArray.slice(i,i);
-				Frontend.new(endX,endY,"red","soldier");
+				Frontend.new(endX,endY,color,eaglep);
 				break;
 			}
 		}

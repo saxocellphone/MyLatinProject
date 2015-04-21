@@ -79,11 +79,16 @@
 				animate();
 				addAxis();
 				addBoxes();
-				for(var i = 0; i < 8; i++){
+				for(var i = 0; i < 4; i++){
 					Frontend.new(i,7,"red","soldier");
 					Frontend.new(i,0,"white","soldier");
 				}
-
+				Frontend.new(4,7,"red","eagle");
+				Frontend.new(4,0,"white","eagle");
+				for(var i = 5; i < 8; i++){
+					Frontend.new(i,7,"red","soldier");
+					Frontend.new(i,0,"white","soldier");
+				}
 				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 			}
@@ -100,12 +105,12 @@
     			mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
 
     			raycaster.setFromCamera( mouse, camera );
-				var element = pieceArray.concat(boardArray);
+					var element = pieceArray.concat(boardArray);
 
     			var intersects = raycaster.intersectObjects(element, true);
 
     			if ( intersects.length > 0) {
-        			intersects[0].object.callback();
+        			intersects[0].object.callback(intersects[0].object.position.x,intersects[0].object.position.y);
     			}
 			}
 
@@ -146,12 +151,13 @@
 						cube.scale.x = cube.scale.y =cube.scale.z= 0.5;
 						cube.name = i+""+j;
 						boardArray.push(cube);
-						cube.callback = function(){
+						cube.callback = function(endX, endY){
 							if(isMoving != ""){
-								Frontend.move(0,0,4,4);
+								Frontend.move(isMoving.charAt(0),isMoving.charAt(1),endX+3,endY+3, isMoving.charAt(2), isMoving.charAt(3));
+								console.log(pieceArray);
 							}
 						}
-
+						cube.visible = false;
 						scene.add(cube);
 					}
 				}
@@ -201,7 +207,7 @@
 				var color = this.color;
 				var cube = this.cube;
 				loader.load(eaglep+'.json', function (geometry, materials) {
-					var materials = new THREE.MeshPhongMaterial({color});
+					var materials = new THREE.MeshPhongMaterial({color:color});
 					var mesh = new THREE.SkinnedMesh(geometry, materials);
 					mesh.scale.set( 0.2, 0.2, 0.2 );
 					mesh.position.y = y-3;
@@ -213,9 +219,9 @@
 					} else {
 						mesh.rotation.y = 0;
 					}
-					cube.callback = function(){
+					cube.callback = function(endX, endY){
 						mesh.material.color.setHex(0x00ff00);
-						isMoving = x+""+y+""+color+""+eaglep;
+						isMoving = x+""+y+""+color.charAt(0)+""+eaglep.charAt(0);
 						render();
 					}
 					cube.scale.x = cube.scale.y =cube.scale.z=4;
