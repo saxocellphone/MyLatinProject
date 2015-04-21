@@ -15,7 +15,6 @@
 		<script src="js/ColladaLoader.js"></script>
 		<script src="js/Frontend.js"></script>
 		<script src="js/TrackballControls.js"></script>
-		<script src='js/threex.domevent.js'></script>
 		<script>
 
 			var camera, scene, renderer, loader, clock, controls;
@@ -27,6 +26,8 @@
 			var multiplayer;
 			var backend;
 			var pieceArray =[];
+			var boardArray = [];
+			var isMoving = "";
 			startScreen();
 
 			function startScreen(){
@@ -75,24 +76,21 @@
 				addLights();
 				animate();
 				addAxis();
-				Frontend.new(4,3,"red","eagle");
-				Frontend.new(4,2,"white","soldier");
-				Frontend.new(4,1,"red","eagle");
-				Frontend.new(4,0,"white","soldier");
-				Frontend.new(4,5,"red","eagle");
-				Frontend.new(4,4,"white","soldier");
+				addBoxes();
+				for(var i = 0; i < 8; i++){
+					Frontend.new(i,7,"red","soldier");
+					Frontend.new(i,0,"white","soldier");
+				}
+
 				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 			}
 			function onDocumentTouchStart( event ) {
-
-							event.preventDefault();
-
-							event.clientX = event.touches[0].clientX;
-							event.clientY = event.touches[0].clientY;
-							onDocumentMouseDown( event );
-
-						}
+				event.preventDefault();
+				event.clientX = event.touches[0].clientX;
+				event.clientY = event.touches[0].clientY;
+				onDocumentMouseDown( event );
+			}
 			function onDocumentMouseDown( event ) {
 				event.preventDefault();
 
@@ -100,11 +98,11 @@
     			mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
 
     			raycaster.setFromCamera( mouse, camera );
+				var element = pieceArray.concat(boardArray);
 
-    			var intersects = raycaster.intersectObjects(scene.children, true);
+    			var intersects = raycaster.intersectObjects(element, true);
 
     			if ( intersects.length > 0) {
-
         			intersects[0].object.callback();
     			}
 			}
@@ -117,8 +115,6 @@
 
 			var renderQueued = false;
 			function render(){
-
-
 				if(!renderQueued){
 					requestAnimationFrame(function(){
 						renderer.render(scene, camera);
@@ -133,6 +129,30 @@
 				var ambientLight=new THREE.HemisphereLight(0xffffff,0xffffff,0.7);
 				scene.add(ambientLight);
 
+			}
+
+			function addBoxes(){
+				var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+				var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
+				var cube = new THREE.Mesh( geometry, material );
+				for(var i = 0; i < 8; i++){
+					for(var j = 0; j < 8; j++){
+						var cube = new THREE.Mesh( geometry, material );
+						cube.position.x = i-3;
+						cube.position.y = j-3;
+						cube.position.z = 0.25;
+						cube.scale.x = cube.scale.y =cube.scale.z= 0.5;
+						cube.name = i+""+j;
+						boardArray.push(cube);
+						cube.callback = function(){
+							if(isMoving != ""){
+								Frontend.move(0,0,4,4);
+							}
+						}
+
+						scene.add(cube);
+					}
+				}
 			}
 
 			function addAxis(){
@@ -150,9 +170,6 @@
 				geometry2.vertices.push(new THREE.Vector3(-4, -4, 0));
 				geometry2.vertices.push(new THREE.Vector3(4, -4, 0));
 				var line = new THREE.Line(geometry, new THREE.LineBasicMaterial(), THREE.LinePieces);
-				line.callback = function(){
-					console.log("hi");
-				}
 				line.position.x +=0.5;
 				line.position.y +=0.5;
 				var line1 = new THREE.Line(geometry1, new THREE.LineBasicMaterial(), THREE.LinePieces);
@@ -161,18 +178,18 @@
 				var line2 = new THREE.Line(geometry2, new THREE.LineBasicMaterial(), THREE.LinePieces);
 				line2.position.x +=0.5;
 				line2.position.y +=0.5;
-				// scene.add(line);
-				// scene.add(line1);
-				// scene.add(line2);
+				scene.add(line);
+				scene.add(line1);
+				scene.add(line2);
 			}
 
-			function Piece(x,y,color,eaglep){
-				var x,y,color,eaglep,mesh;
+			function Piece(x,y,color,eaglep, cube){
+				var x,y,color,eaglep;
 				this.eaglep = eaglep;
 				this.x = x;
 				this.y = y;
 				this.color = color;
-				this.mesh = mesh;
+				this.cube = cube;
 			}
 
 			Piece.prototype.load = function(){
@@ -180,30 +197,37 @@
 				var y = this.y;
 				var eaglep = this.eaglep;
 				var color = this.color;
-				var mesh = this.mesh;
+				var cube = this.cube;
 				loader.load(eaglep+'.json', function (geometry, materials) {
 					var materials = new THREE.MeshPhongMaterial({color});
-					mesh = new THREE.SkinnedMesh(geometry, materials);
+					var mesh = new THREE.SkinnedMesh(geometry, materials);
 					mesh.scale.set( 0.2, 0.2, 0.2 );
 					mesh.position.y = y-3;
 					mesh.position.x = x-3;
 					mesh.rotation.x = 3.14/2;
-					mesh.name = "test";
+					mesh.name = x+""+y;
 					if(color=="white"){
 						mesh.rotation.y = 3.14;
 					} else {
 						mesh.rotation.y = 0;
 					}
-					mesh.callback = function(){
-						console.log("hi");
+					cube.callback = function(){
+						mesh.material.color.setHex(0x00ff00);
+						isMoving = x+""+y+""+color+""+eaglep;
+						render();
 					}
+					cube.scale.x = cube.scale.y =cube.scale.z=4;
+					cube.position.y = 2;
+					cube.visible = false;
+					mesh.add(cube);
 					scene.add(mesh);
+					pieceArray.push(mesh);
 					render();
 				});
+
 			}
 
 			Piece.prototype.move = function(endX, endY){
-				//scene.remove(this.mesh);
 				render();
 			}
 

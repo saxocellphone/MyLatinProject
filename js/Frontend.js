@@ -1,7 +1,10 @@
 Frontend = {
 	new: function (x,y,color,eaglep){
-		var soldier = new Piece(x,y,color,eaglep);
-		pieceArray.push(soldier);
+		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
+		var cube = new THREE.Mesh( geometry, material );
+		var soldier = new Piece(x,y,color,eaglep, cube);
+
 		soldier.load();
 	},
 	start: function (){
@@ -22,8 +25,11 @@ Frontend = {
 
 	move: function(begX, begY, endX, endY){
 		for(var i = 0; i < pieceArray.length; i++){
-			if(pieceArray[i].x == begX && pieceArray[i].y == begY){
-				
+			if(pieceArray[i].name == begX+""+begY){
+				scene.remove(pieceArray[i]);
+				pieceArray.slice(i,i);
+				Frontend.new(endX,endY,"red","soldier");
+				break;
 			}
 		}
 	}
